@@ -179,6 +179,8 @@ return [
         App\Applications\Api\Providers\ApiServiceProvider::class,
         App\Applications\Site\Providers\SiteServiceProvider::class,
 
+        Rinvex\Repository\Providers\RepositoryServiceProvider::class,
+
     ],
 
     /*

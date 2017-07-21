@@ -13,6 +13,4 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', function (){
-    return 'true';
-});
+Route::get('/', ['uses'=>'UserController@index']);
