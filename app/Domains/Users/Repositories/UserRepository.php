@@ -2,7 +2,7 @@
 namespace App\Domains\Models\Users\Repositories;
 
 
-use App\Domains\Models\Users\User;
+use App\Domains\Users\User;
 use Rinvex\Repository\Repositories\EloquentRepository;
 use Illuminate\Contracts\Container\Container;
 
