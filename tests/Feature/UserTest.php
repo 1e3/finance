@@ -11,31 +11,34 @@ class UserTest extends TestCase
 {
     use DatabaseTransactions,DatabaseMigrations;
 
-    protected $token;
-
-    public function signIn($data=['email'=>'andre.galdinolima@gmail.com', 'password'=>'test123'])
-    {
-        $this->post('api/auth/signin', $data);
-        $content = json_decode($this->response->getContent());
-
-        $this->assertObjectHasAttribute('token', $content, 'Token does not exists');
-        $this->token = $content->token;
-
-        return $this;
-    }
-
     public function testRegister()
     {
-        $user = [
-            'name'=>'André',
-            'email'=>'andregaldinolima@gmail.com',
-            'password'=>'test123',
-            'password_confirmation'=>'test123'
-        ];
-        $response = $this->call('GET','api/auth/singup',$user);
-        $data = $response->getData(TRUE);
+        $content = $this->signUp();
+        $this->assertObjectHasAttribute('access_token', $content);
+        $this->token = $content->access_token;
+        $this->assertEquals(200,$this->response->status());
+    }
 
-        $this->assertEquals(\HttpResponse::HTTP_OK,$response->status());
+    public function testRegisterHasToken()
+    {
+        $this->signUp();
 
+        $this->assertEquals(200,$this->response->status());
+    }
+
+    public function testLogin()
+    {
+        $this->signUp();
+        $this->signIn();
+        $this->assertEquals(200,$this->response->status());
+    }
+
+    public function testLoginHasToken()
+    {
+        $this->signUp();
+        $content = $this->signIn();
+        $this->assertObjectHasAttribute('access_token', $content);
+        $this->token = $content->access_token;
+        $this->assertEquals(200,$this->response->status());
     }
 }

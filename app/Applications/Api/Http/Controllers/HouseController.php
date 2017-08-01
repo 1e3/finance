@@ -9,14 +9,14 @@
 namespace App\Applications\Api\Http\Controllers;
 
 
-use App\Applications\Api\Http\Requests\CategoryRequest;
-use App\Domains\Categories\Services\CategoryService;
+use App\Applications\Api\Http\Requests\HouseRequest;
+use App\Domains\Categories\Services\HouseService;
 
-class CategoryController extends BaseController
+class HouseController extends BaseController
 {
     private $service;
 
-    public function __construct(CategoryService $service)
+    public function __construct(HouseService $service)
     {
         $this->service = $service;
     }
@@ -44,22 +44,24 @@ class CategoryController extends BaseController
         ],404);
     }
 
-    public function store(CategoryRequest $request)
+    public function store(HouseRequest $request)
     {
         $data = $this->service->save($request->all());
         return response()->json(compact('data'));
     }
 
-    public function update(CategoryRequest $request, $id)
+    public function update(HouseRequest $request, $id)
     {
         $data = $this->service->update($id, $request->all());
         return response()->json(compact('data'));
     }
 
-    public function destroy(CategoryRequest $request,$id)
+    public function destroy(HouseRequest $request,$id)
     {
         $this->service->delete($id);
-        return response()->json(['message'=>'Successfull'],200);
+        return response()->json([
+            'message' => 'Successfull'
+        ],200);
     }
 
 

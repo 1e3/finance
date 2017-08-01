@@ -2,7 +2,7 @@
 
 use \App\Core\Http\Requests\JsonRequest;
 
-class CategoryRequest extends JsonRequest
+class HouseRequest extends JsonRequest
 {
     /**
      * Determine if the user is authorized to make this request.
