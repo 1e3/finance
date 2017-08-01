@@ -11,10 +11,14 @@
 */
 Route::group(['prefix'=>'auth','as'=>'auth.'], function (){
 
-    Route::post('singin',['as'=>'singin','uses'=>'LoginController@login']);
-
-    Route::post('singup',['as'=>'singup','uses'=>'RegisterController@register']);
+    Route::post('signin',['as'=>'singin','uses'=>'LoginController@login']);
+    Route::post('signup',['as'=>'singup','uses'=>'RegisterController@register']);
 });
 
-//Route::resource('users','UserController');
+Route::group(['middleware'=>'jwt.auth'],function (){
+    Route::resource('categories','CategoryController');
+});
+
+Route::get('auth/refresh',['middleware'=>'auth.api.renew','uses'=>'LoginController@refreshToken']);
+
 

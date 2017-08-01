@@ -101,4 +101,12 @@ class LoginController extends Controller
         return $this->sendFailedLoginResponse($request);
     }
 
+    public  function refreshToken(Request $request)
+    {
+        $this->authenticated(
+            $request,
+            JWTAuth::parseToken()->authenticate(),
+            JWTAuth::getToken()
+        );
+    }
 }

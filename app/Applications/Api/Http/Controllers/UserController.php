@@ -11,7 +11,7 @@ namespace App\Applications\Api\Http\Controllers;
 
 use App\Domains\Models\Users\Repositories\UserRepository;
 
-class UserController
+class UserController extends BaseController
 {
     private $repo;
     public function __construct(UserRepository $user)

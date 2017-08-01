@@ -6,6 +6,6 @@ use phpDocumentor\Reflection\Types\Integer;
 interface CrudInterface {
 
     public function save($data = [],$transaction = true);
-    public function update(Integer $id, $data = array(), $transaction = true);
-    public function delete(Integer $id,$transaction = true);
+    public function update($id, $data = array(), $transaction = true);
+    public function delete($id, $transaction = true);
 }
