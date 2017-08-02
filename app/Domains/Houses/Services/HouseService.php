@@ -2,7 +2,7 @@
 namespace App\Domains\Categories\Services;
 
 use App\Core\Services\BaseService;
-use App\Domains\Categories\Repositories\HouseRepository;
+use App\Domains\Houses\Repositories\HouseRepository;
 
 class HouseService extends BaseService
 {
