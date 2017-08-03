@@ -18,6 +18,7 @@ Route::group(['prefix'=>'auth','as'=>'auth.'], function (){
 Route::group(['middleware'=>'jwt.auth'],function (){
     Route::resource('categories','CategoryController');
     Route::resource('houses','HouseController');
+    Route::resource('invoices','InvoiceController');
 });
 
 Route::get('auth/refresh',['middleware'=>'auth.api.renew','uses'=>'LoginController@refreshToken']);

@@ -9,14 +9,14 @@
 namespace App\Applications\Api\Http\Controllers;
 
 
-use App\Applications\Api\Http\Requests\HouseRequest;
-use App\Domains\Houses\Services\HouseService;
+use App\Applications\Api\Http\Requests\InvoiceRequest;
+use App\Domains\Invoices\Services\InvoiceService;
 
-class HouseController extends BaseController
+class InvoiceController extends BaseController
 {
     private $service;
 
-    public function __construct(HouseService $service)
+    public function __construct(InvoiceService $service)
     {
         $this->service = $service;
     }
@@ -44,19 +44,19 @@ class HouseController extends BaseController
         ],404);
     }
 
-    public function store(HouseRequest $request)
+    public function store(InvoiceRequest $request)
     {
         $data = $this->service->save($request->all());
         return response()->json(compact('data'));
     }
 
-    public function update(HouseRequest $request, $id)
+    public function update(InvoiceRequest $request, $id)
     {
         $data = $this->service->update($id, $request->all());
         return response()->json(compact('data'));
     }
 
-    public function destroy(HouseRequest $request,$id)
+    public function destroy(InvoiceRequest $request,$id)
     {
         $this->service->delete($id);
         return response()->json([

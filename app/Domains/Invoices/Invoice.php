@@ -15,7 +15,7 @@ class Invoice extends Model
         'user_payment_id','category_id'
     ];
 
-    protected $dates = ['bought'];
+    protected $dates = ['bought_at'];
 
     public function userCreator()
     {
@@ -35,5 +35,10 @@ class Invoice extends Model
     public function house()
     {
         return $this->belongsTo(House::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_invoice', 'user_id', 'invoice_id');
     }
 }

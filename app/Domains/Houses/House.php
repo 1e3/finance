@@ -3,6 +3,7 @@
 namespace App\Domains\Houses;
 
 use App\Domains\Invoices\Invoice;
+use App\Domains\Users\User;
 use Illuminate\Database\Eloquent\Model;
 
 class House extends Model
@@ -13,5 +14,10 @@ class House extends Model
     public function invoices()
     {
         return $this->hasMany(Invoice::class);
+    }
+
+    public function residents()
+    {
+        return $this->belongsToMany(User::class,'user_house','user_id', 'house_id');
     }
 }
