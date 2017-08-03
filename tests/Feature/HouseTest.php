@@ -58,8 +58,8 @@ class HouseTest extends TestCase
         */
         $headers['Authorization'] = 'Bearer '. $this->token;
         $this->json('POST','api/houses',['name'=>'co'],$headers)
-            ->assertStatus(401)
-            ->assertSee('failed to pass validation');
+            ->assertStatus(422)
+            ->assertSee('The name must be at least 3');
     }
 
     public function testGetAll()
@@ -101,8 +101,8 @@ class HouseTest extends TestCase
     {
         $headers['Authorization'] = 'Bearer '. $this->token;
         $this->json('PATCH','api/houses/3',['name'=>'ca'],$headers)
-            ->assertStatus(401)
-            ->assertSee('failed to pass validation');
+            ->assertStatus(422)
+            ->assertSee('The name must be at least 3');
     }
 
 

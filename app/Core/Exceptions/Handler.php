@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
@@ -45,26 +46,32 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        if(!$request->expectsJson()) return parent::render($request, $e);
+        if ($request->wantsJson())
+        {
+            // Define the response
+            $response = [
+                'errors' => 'Sorry, something went wrong.'
+            ];
 
-        switch(true) {
-            case $e instanceof ModelNotFoundException:
-                return response()->json([
-                    'message' => 'Record not found',
-                ], 404);
-                break;
-            case $e instanceof NotFoundHttpException:
-                return response()->json([
-                    'message' => 'Page not found',
-                ], 404);
-                break;
-            default:
-                return response()->json([
-                    'message' => $e->getMessage(),
-                ], 401);
-                break;
+            // If the app is in debug mode
+            if (config('app.debug'))
+            {
+                // Add the exception class name, message and stack trace to response
+                $response['exception'] = get_class($e); // Reflection might be better here
+                $response['message'] = $e->getMessage();
+                $response['trace'] = $e->getTrace();
+            }
 
+            // Default response of 400
+            $status = 400;
+            if ($e instanceof ValidationException)
+                return $this->convertValidationExceptionToResponse($e, $request);
+
+            $status = ($this->isHttpException($e)) ? $e->getCode() : $status;
+
+            return response()->json($response, $status);
         }
+        return parent::render($request, $e);
     }
 
     /**

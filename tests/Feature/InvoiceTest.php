@@ -40,7 +40,8 @@ class InvoiceTest extends TestCase
             'user_id' => $this->users->first()->id,//userCreator
             'user_payment_id' => $this->users->first()->id,//userWhoPaid
             'category_id' => $this->categories->first()->id,
-            'house_id' => $this->categories->first()->id
+            'house_id' => $this->house->id,
+            'parcels'  => 1
         ],$headers)
             ->assertStatus(200)
             ->assertJsonStructure([
@@ -57,7 +58,7 @@ class InvoiceTest extends TestCase
             ]);
     }
 
-    /*
+
         public function testCreateFailed()
         {
             //TODO: create test to api token
@@ -67,11 +68,11 @@ class InvoiceTest extends TestCase
              //   ->assertSee('Token not provided');
 
             $headers['Authorization'] = 'Bearer '. $this->token;
-            $this->json('POST','api/invoices',['name'=>'co'],$headers)
-                ->assertStatus(401)
-                ->assertSee('failed to pass validation');
+            $response = $this->json('POST','api/invoices',['price'=>'co'],$headers)
+                ->assertStatus(422)
+                ->assertSee('price format is invalid');
         }
-
+/*
         public function testGetAll()
         {
             $headers['Authorization'] = 'Bearer '. $this->token;

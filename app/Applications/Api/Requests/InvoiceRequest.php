@@ -14,6 +14,11 @@ class InvoiceRequest extends JsonRequest
         return true;
     }
 
+    public function wantsJson()
+    {
+        return true;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,12 +30,25 @@ class InvoiceRequest extends JsonRequest
         {
             case 'POST':
                 return [
-                    'name'       => 'required|min:3',
+                    'price'         =>  'required|regex:/^\d*(\.\d{2})?$/',
+                    'description'   =>  'required|min:3',
+                    'parcels'       =>  'required|numeric|min:1',
+                    'user_id'       =>  'required|exists:users,id',
+                    'user_payment_id'       =>  'required|exists:users,id',
+                    'category_id'       =>  'required|exists:categories,id',
+                    'house_id'       =>  'required|exists:houses,id',
+
                 ];
                 break;
             case 'PATCH':
                 return [
-                    'name'       => 'required|min:3',
+                    'price'         =>  'required|regex:/^\d*(\.\d{2})?$/',
+                    'description'   =>  'required|min:3',
+                    'parcels'       =>  'required|numeric|min:1',
+                    'user_id'       =>  'required|exists:users,id',
+                    'user_payment_id'       =>  'required|exists:users,id',
+                    'category_id'       =>  'required|exists:categories,id',
+                    'house_id'       =>  'required|exists:houses,id',
                 ];
                 break;
             default:
