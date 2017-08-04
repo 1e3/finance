@@ -18,6 +18,6 @@ class House extends Model
 
     public function residents()
     {
-        return $this->belongsToMany(User::class,'user_house','user_id', 'house_id');
+        return $this->belongsToMany(User::class,'user_house','house_id', 'user_id');
     }
 }

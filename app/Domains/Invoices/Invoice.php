@@ -39,6 +39,6 @@ class Invoice extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'user_invoice', 'user_id', 'invoice_id');
+        return $this->belongsToMany(User::class, 'user_invoice', 'invoice_id', 'user_id');
     }
 }
