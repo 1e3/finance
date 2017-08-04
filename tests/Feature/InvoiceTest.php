@@ -24,7 +24,7 @@ class InvoiceTest extends TestCase
         $this->assertObjectHasAttribute('access_token', $content);
         $this->token = $content->access_token;
 
-        $this->seed(\DatabaseSeeder::class);
+        $this->seed(\DatabaseFakeSeeder::class);
         $this->users = \App\Domains\Users\User::all();
         $this->categories = \App\Domains\Categories\Category::all();
         $this->house = \App\Domains\Houses\House::all()->first();
@@ -72,50 +72,58 @@ class InvoiceTest extends TestCase
                 ->assertStatus(422)
                 ->assertSee('price format is invalid');
         }
-/*
+
         public function testGetAll()
         {
+            $this->seed(\InvoiceFakeSeeder::class);
             $headers['Authorization'] = 'Bearer '. $this->token;
             $response = $this->json('GET','api/invoices',[],$headers)
                 ->assertStatus(200)
                 ->assertJsonStructure([
                     'data' => [
                         '*'=>[
-                            'id','name','created_at','updated_at'
+                            'id',
+                            'price',
+                            'description',
+                            'user_id',
+                            'user_payment_id',
+                            'category_id',
+                            'created_at',
+                            'updated_at'
                         ]
                     ]
                 ]);
         }
 
-        public function testDelete()
-        {
-            $headers['Authorization'] = 'Bearer '. $this->token;
-            $this->json('DELETE','api/invoices/1',[],$headers)
-                ->assertStatus(200)
-                ->assertJson(['message'=>'Successfull']);
-        }
+            public function testDelete()
+            {
+                $this->seed(\InvoiceFakeSeeder::class);
+                $headers['Authorization'] = 'Bearer '. $this->token;
+                $this->json('DELETE','api/invoices/1',[],$headers)
+                    ->assertStatus(200)
+                    ->assertJson(['message'=>'Successfull']);
+            }
+            /*
+            public function testUpdate()
+            {
+                $headers['Authorization'] = 'Bearer '. $this->token;
+                $this->json('PATCH','api/invoices/3',['parcels'=>2],$headers)
+                    ->assertStatus(200)
+                    ->assertJson([
+                        'data' =>[
+                            'id'=>3,
+                            'name'=>'Minha Rep'
+                        ]
+                    ]);
+            }
+            */
 
-        public function testUpdate()
-        {
-            $headers['Authorization'] = 'Bearer '. $this->token;
-            $this->json('PATCH','api/invoices/3',['name'=>'Minha Rep'],$headers)
-                ->assertStatus(200)
-                ->assertJson([
-                    'data' =>[
-                        'id'=>3,
-                        'name'=>'Minha Rep'
-                    ]
-                ]);
-        }
-
-        public function testUpdateFailed()
-        {
-            $headers['Authorization'] = 'Bearer '. $this->token;
-            $this->json('PATCH','api/invoices/3',['name'=>'ca'],$headers)
-                ->assertStatus(401)
-                ->assertSee('failed to pass validation');
-        }
-
-        */
+            public function testUpdateFailed()
+            {
+                $headers['Authorization'] = 'Bearer '. $this->token;
+                $this->json('PATCH','api/invoices/3',['name'=>'ca'],$headers)
+                    ->assertStatus(422)
+                    ->assertSee('price field is required');
+            }
 
 }
