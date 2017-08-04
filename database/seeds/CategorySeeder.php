@@ -12,12 +12,24 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        $faker = \Faker\Factory::create();
-        for ($i = 0; $i < 10; $i++) {
-            Category::create([
-                'name' => $faker->name,
-            ]);
-        }
+        Category::create([
+            'name' => 'Comida'
+        ]);
 
+        Category::create([
+            'name' => 'Casa'
+        ]);
+
+        Category::create([
+            'name' => 'Entreterimento'
+        ]);
+
+        Category::create([
+            'name' => 'Transporte'
+        ]);
+
+        Category::create([
+            'name' => 'Construção'
+        ]);
     }
 }

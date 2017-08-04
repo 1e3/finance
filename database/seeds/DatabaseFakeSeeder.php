@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
-class DatabaseSeeder extends Seeder
+class DatabaseFakeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,10 +14,9 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        $this->call(UserSeeder::class);
-        $this->call(CategorySeeder::class);
-        $this->call(HouseSeeder::class);
-        $this->call(InvoiceSeeder::class);
+        $this->call(UserFakeSeeder::class);
+        $this->call(CategoryFakeSeeder::class);
+        $this->call(HouseFakeSeeder::class);
         Model::reguard();
     }
 }

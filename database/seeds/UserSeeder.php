@@ -12,13 +12,28 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $faker = \Faker\Factory::create();
-        for ($i = 0; $i < 4; $i++) {
-            User::create([
-                'name' => $faker->name,
-                'email' => $faker->email,
-                'password' => $faker->password
-            ]);
-        }
+        User::create([
+            'name' => 'André Galdino',
+            'email' => 'andre@galdino.com',
+            'password' => bcrypt('test123')
+        ]);
+
+        User::create([
+            'name' => 'Rafael Franco',
+            'email' => 'rafel@franco.com',
+            'password' => bcrypt('test123')
+        ]);
+
+        User::create([
+            'name' => 'Danilo Guerra',
+            'email' => 'danilo@guerra.com',
+            'password' => bcrypt('test123')
+        ]);
+
+        User::create([
+            'name' => 'Julia Viana',
+            'email' => 'julia@viana.com',
+            'password' => bcrypt('test123')
+        ]);
     }
 }

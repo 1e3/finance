@@ -1,7 +1,7 @@
 <?php
 
-use App\Domains\Houses\House;
 use Illuminate\Database\Seeder;
+use \App\Domains\Houses\House;
 
 class HouseSeeder extends Seeder
 {
@@ -12,9 +12,13 @@ class HouseSeeder extends Seeder
      */
     public function run()
     {
-        $faker = \Faker\Factory::create();
-        $house = House::create(['name' => $faker->name]);
-        $users = App\Domains\Users\User::all();
-        $house->residents()->sync($users->only('id'));
+        $house = House::create([
+            'name' => 'Casa Nossa'
+        ]);
+        $house->residents()->sync([
+            1=>['admin'=>true],
+            2=>['admin'=>true],
+            3=>['admin'=>true],
+            4=>['admin'=>true]]);
     }
 }
