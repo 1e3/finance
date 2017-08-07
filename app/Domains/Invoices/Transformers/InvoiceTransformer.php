@@ -14,7 +14,7 @@ class InvoiceTransformer extends TransformerAbstract
                 $payments[] = [
                     'id'    =>  $pay->id,
                     'value' =>  $pay->price,
-                    'data'  =>  $pay->paid_at->format('d/m/Y'),
+                    'data'  =>  $pay->paid_at->timestamp,
                     'status'=>  $pay->statusString
                 ];
             }
@@ -32,7 +32,7 @@ class InvoiceTransformer extends TransformerAbstract
             'id'        => (int) $invoice->id,
             'item'      => $invoice->description,
             'value'     => $invoice->price,
-            'data'      => $invoice->bought_at->format('d/m/Y'),
+            'data'      => $invoice->bought_at->timestamp,
             'parcels'   => $invoice->parcels,
             'value_by_parcel'   =>   $invoice->price_parcel,
             'user_payment'  => [
