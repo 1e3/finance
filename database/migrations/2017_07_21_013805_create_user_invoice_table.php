@@ -13,7 +13,7 @@ class CreateUserInvoiceTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_invoice', function (Blueprint $table) {
+        Schema::create('invoice_user', function (Blueprint $table) {
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('invoice_id');
         });
@@ -27,5 +27,6 @@ class CreateUserInvoiceTable extends Migration
     public function down()
     {
         Schema::dropIfExists('user_invoice');
+        Schema::dropIfExists('invoice_user');
     }
 }
