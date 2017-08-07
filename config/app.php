@@ -181,7 +181,8 @@ return [
 
         Rinvex\Repository\Providers\RepositoryServiceProvider::class,
         //Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class
-        \Tymon\JWTAuth\Providers\LaravelServiceProvider::class
+        \Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        Spatie\Fractal\FractalServiceProvider::class,
 
     ],
 
@@ -232,7 +233,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'JWTAuth'   => \Tymon\JWTAuth\Facades\JWTAuth::class,
-        'JWTFactory' => \Tymon\JWTAuth\Facades\JWTFactory::class
+        'JWTFactory' => \Tymon\JWTAuth\Facades\JWTFactory::class,
+        'Fractal' => Spatie\Fractal\FractalFacade::class,
 
     ],
 

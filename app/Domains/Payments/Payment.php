@@ -24,5 +24,23 @@ class Payment extends Model
         return $this->belongsTo(Invoice::class);
     }
 
+    public function getStatusStringAttribute()
+    {
+        switch ($this->status){
+            case 0:
+                return 'Pendenting';
+                break;
+            case 1:
+                return 'Approved';
+                break;
+            case 2:
+                return 'Not Approved';
+                break;
+            default:
+                return 'Not Avaliable';
+                break;
+        }
+    }
+
 
 }

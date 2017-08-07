@@ -8,7 +8,6 @@
 
 namespace App\Core\Services;
 
-
 use App\Core\Contracts\CrudInterface;
 use Rinvex\Repository\Repositories\EloquentRepository;
 
@@ -24,6 +23,12 @@ abstract class BaseService implements CrudInterface
         $this->repo = $repo;
     }
 
+    /**
+     * @param array $data
+     * @param bool $transaction
+     * @return \Illuminate\Database\Eloquent\Model
+     * @throws \Exception
+     */
     public function save($data = [],$transaction = true)
     {
         if ($transaction)
@@ -44,6 +49,13 @@ abstract class BaseService implements CrudInterface
     }
 
 
+    /**
+     * @param $id
+     * @param array $data
+     * @param bool $transaction
+     * @return \Illuminate\Database\Eloquent\Model
+     * @throws \Exception
+     */
     public function update($id, $data = array(), $transaction = true)
     {
         if ($transaction) {
@@ -62,6 +74,12 @@ abstract class BaseService implements CrudInterface
         throw new \Exception("error to update model");
     }
 
+    /**
+     * @param $id
+     * @param bool $transaction
+     * @return \Illuminate\Database\Eloquent\Model
+     * @throws \Exception
+     */
     public function delete($id, $transaction = true)
     {
         if ($transaction) {
@@ -88,11 +106,21 @@ abstract class BaseService implements CrudInterface
         throw new \Exception("error to delete model");
     }
 
+    /**
+     * @param $attribute
+     * @param $value
+     * @param array $attributes
+     * @return \Illuminate\Database\Eloquent\Model
+     */
     public function findBy($attribute, $value, $attributes = ['*'])
     {
         return $this->repo->findBy($attribute,$value,$attributes);
     }
 
+    /**
+     * @param array $attributes
+     * @return \Illuminate\Database\Eloquent\Collection;
+     */
     public function findAll($attributes = ['*'])
     {
         return $this->repo->findAll($attributes);

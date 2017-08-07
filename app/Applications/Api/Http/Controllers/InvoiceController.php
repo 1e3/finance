@@ -11,6 +11,7 @@ namespace App\Applications\Api\Http\Controllers;
 
 use App\Applications\Api\Http\Requests\InvoiceRequest;
 use App\Domains\Invoices\Services\InvoiceService;
+use App\Domains\Invoices\Transformers\InvoiceTransformer;
 
 class InvoiceController extends BaseController
 {
@@ -62,6 +63,20 @@ class InvoiceController extends BaseController
         return response()->json([
             'message' => 'Successfull'
         ],200);
+    }
+
+    public function resume($id)
+    {
+        $data = $this->service->resume($id);
+        $invoice = fractal($data, new InvoiceTransformer())->toArray();
+
+        return response()->json($invoice);
+//        if ($data)
+//            return response()->json(compact('data'));
+//
+//        return response()->json([
+//            'message'=> 'Records not found'
+//        ],404);
     }
 
 

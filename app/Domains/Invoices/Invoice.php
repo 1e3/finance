@@ -4,7 +4,9 @@ namespace App\Domains\Invoices;
 
 use App\Domains\Categories\Category;
 use App\Domains\Houses\House;
+use App\Domains\Payments\Payment;
 use App\Domains\Users\User;
+use App\Domains\Users\UserInvoice;
 use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
@@ -39,6 +41,46 @@ class Invoice extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'user_invoice', 'invoice_id', 'user_id');
+        return $this->belongsToMany(User::class, null, 'invoice_id', 'user_id')->using(InvoiceUser::class);
     }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    ##
+
+    public function setPriceSplitedAttribute($value)
+    {
+        $this->attributes['price_splited'] = $value;
+    }
+
+    public function setTotalPaidAttribute($value)
+    {
+        $this->attributes['total_paid'] = $value;
+    }
+
+    public function setPriceParcelAttribute($value)
+    {
+        $this->attributes['price_parcel'] = $value;
+    }
+
+    public function setTotalSplitedAttribute($value)
+    {
+        $this->attributes['total_splited'] = $value;
+    }
+
+    public function getSubtotalAttribute()
+    {
+        return $this->attributes['total_splited'] - $this->attributes['total_paid'];
+    }
+
+    public function getNumberResidentsAttribute()
+    {
+        return $this->users->count();
+    }
+
+
+
 }
