@@ -2,6 +2,7 @@
 namespace App\Domains\Invoices\Services;
 
 use App\Core\Services\BaseService;
+use App\Domains\Houses\Services\HouseService;
 use App\Domains\Invoices\Repositories\InvoiceRepository;
 use Carbon\Carbon;
 
@@ -76,5 +77,10 @@ class InvoiceService extends BaseService
     public function splitPrice($price,$countUsers)
     {
         return $price/$countUsers;
+    }
+
+    public function findByHouse($house)
+    {
+        return $this->repo->findWhere(['house_id','=',$house]);
     }
 }

@@ -11,6 +11,7 @@ namespace App\Applications\Api\Http\Controllers;
 
 use App\Applications\Api\Http\Requests\InvoiceRequest;
 use App\Domains\Invoices\Services\InvoiceService;
+use App\Domains\Invoices\Transformers\InvoiceItemTransformer;
 use App\Domains\Invoices\Transformers\InvoiceTransformer;
 
 class InvoiceController extends BaseController
@@ -71,6 +72,13 @@ class InvoiceController extends BaseController
         $invoice = fractal($data, new InvoiceTransformer())->toArray();
 
         return response()->json($invoice);
+    }
+
+    public function showByHouse($house)
+    {
+        $data = $this->service->findByHouse($house);
+        $invoices = fractal()->collection($data)->transformWith(new InvoiceItemTransformer())->toArray();
+        return response()->json($invoices);
     }
 
 

@@ -19,6 +19,7 @@ Route::group(['middleware'=>'jwt.auth'],function (){
     Route::resource('categories','CategoryController');
     Route::resource('houses','HouseController');
     Route::get('invoices/{id}/resume',['as'=>'invoices.resume','uses'=>'InvoiceController@resume']);
+    Route::get('invoices/house/{house}',['as'=>'invoices.house','uses'=>'InvoiceController@showByHouse']);
     Route::resource('invoices','InvoiceController');
     Route::resource('payments','PaymentController');
 });
