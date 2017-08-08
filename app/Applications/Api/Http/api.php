@@ -20,6 +20,7 @@ Route::group(['middleware'=>'jwt.auth'],function (){
     Route::resource('houses','HouseController');
     Route::get('invoices/{id}/resume',['as'=>'invoices.resume','uses'=>'InvoiceController@resume']);
     Route::resource('invoices','InvoiceController');
+    Route::resource('payments','PaymentController');
 });
 
 Route::get('auth/refresh',['middleware'=>'auth.api.renew','uses'=>'LoginController@refreshToken']);

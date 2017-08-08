@@ -35,6 +35,7 @@ class InvoiceTransformer extends TransformerAbstract
             'data'      => $invoice->bought_at->timestamp,
             'parcels'   => $invoice->parcels,
             'value_by_parcel'   =>  (float) sprintf("%.2f",$invoice->price_parcel*1.0),
+            'total_paid'   =>  (float) sprintf("%.2f",$invoice->total_paid*1.0),
             'user_payment'  => [
                 'id'    =>  $invoice->userWhoPaid->id,
                 'name'  =>  $invoice->userWhoPaid->name

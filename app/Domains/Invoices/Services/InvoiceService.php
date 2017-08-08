@@ -4,7 +4,6 @@ namespace App\Domains\Invoices\Services;
 use App\Core\Services\BaseService;
 use App\Domains\Invoices\Repositories\InvoiceRepository;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 
 class InvoiceService extends BaseService
 {
