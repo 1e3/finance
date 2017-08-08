@@ -71,12 +71,6 @@ class InvoiceController extends BaseController
         $invoice = fractal($data, new InvoiceTransformer())->toArray();
 
         return response()->json($invoice);
-//        if ($data)
-//            return response()->json(compact('data'));
-//
-//        return response()->json([
-//            'message'=> 'Records not found'
-//        ],404);
     }
 
 
