@@ -18,9 +18,13 @@ Route::group(['prefix'=>'auth','as'=>'auth.'], function (){
 Route::group(['middleware'=>'jwt.auth'],function (){
     Route::resource('categories','CategoryController');
     Route::resource('houses','HouseController');
+
     Route::get('invoices/{id}/resume',['as'=>'invoices.resume','uses'=>'InvoiceController@resume']);
     Route::get('invoices/house/{house}',['as'=>'invoices.house','uses'=>'InvoiceController@showByHouse']);
+    Route::get('invoices/myinvoices',['as'=>'invoices.house','uses'=>'InvoiceController@myInvoices']);
+    Route::get('invoices/associate',['as'=>'invoices.house','uses'=>'InvoiceController@associate']);
     Route::resource('invoices','InvoiceController');
+
     Route::resource('payments','PaymentController');
 });
 

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class InvoiceUser extends Pivot
 {
-    protected $table = 'user_invoice';
+    protected $table = 'invoice_user';
 
     public function setTotalPaidAttribute($value)
     {

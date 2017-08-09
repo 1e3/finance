@@ -13,6 +13,7 @@ use App\Applications\Api\Http\Requests\InvoiceRequest;
 use App\Domains\Invoices\Services\InvoiceService;
 use App\Domains\Invoices\Transformers\InvoiceItemTransformer;
 use App\Domains\Invoices\Transformers\InvoiceTransformer;
+use JWTAuth;
 
 class InvoiceController extends BaseController
 {
@@ -81,6 +82,21 @@ class InvoiceController extends BaseController
         return response()->json($invoices);
     }
 
+    public function myInvoices()
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        $data = $this->service->findByUser($user->id);
+        $invoices = fractal()->collection($data)->transformWith(new InvoiceItemTransformer())->toArray();
+        return response()->json($invoices);
+    }
+
+    public function associate()
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        $data = $this->service->findByUserHasMember($user->id);
+        $invoices = fractal()->collection($data)->transformWith(new InvoiceItemTransformer())->toArray();
+        return response()->json($invoices);
+    }
 
 
 
