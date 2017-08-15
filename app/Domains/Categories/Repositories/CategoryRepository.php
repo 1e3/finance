@@ -9,16 +9,13 @@
 namespace App\Domains\Categories\Repositories;
 
 
+use App\Core\Repositories\BaseRepository;
 use App\Domains\Categories\Category;
-use Illuminate\Container\Container;
-use Rinvex\Repository\Repositories\EloquentRepository;
 
-class CategoryRepository extends EloquentRepository
+class CategoryRepository extends BaseRepository
 {
-    public function __construct(Container $container)
+    public function __construct()
     {
-        $this->setContainer($container)
-            ->setModel(Category::class)
-            ->setRepositoryId('rinvex.repository.categories');
+        $this->model = Category::class;
     }
 }

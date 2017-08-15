@@ -9,16 +9,13 @@
 namespace App\Domains\Payments\Repositories;
 
 
+use App\Core\Repositories\BaseRepository;
 use App\Domains\Payments\Payment;
-use Illuminate\Container\Container;
-use Rinvex\Repository\Repositories\EloquentRepository;
 
-class PaymentRepository extends EloquentRepository
+class PaymentRepository extends BaseRepository
 {
-    public function __construct(Container $container)
+    public function __construct()
     {
-        $this->setContainer($container)
-            ->setModel(Payment::class)
-            ->setRepositoryId('rinvex.repository.payments');
+        $this->model = Payment::class;
     }
 }

@@ -8,27 +8,41 @@
 
 namespace App\Domains\Invoices\Repositories;
 
+use App\Core\Repositories\BaseRepository;
 use App\Domains\Invoices\Invoice;
-use Illuminate\Container\Container;
-use Rinvex\Repository\Repositories\EloquentRepository;
 
-class InvoiceRepository extends EloquentRepository
+class InvoiceRepository extends BaseRepository
 {
-    public function __construct(Container $container)
+    public function __construct()
     {
-        $this->setContainer($container)
-            ->setModel(Invoice::class)
-            ->setRepositoryId('rinvex.repository.invoices');
+        $this->model = Invoice::class;
     }
 
-    public function findWhereUser($user_id, $attributes = ['*'])
+    public function whereUserHasInvoices($user_id)
     {
-        return Invoice::join('invoice_user', function ($join) use ($user_id) {
-                $join->on('invoices.id', '=', 'invoice_user.invoice_id')
-                    ->where('invoice_user.user_id', '=', $user_id);
-            })->select($attributes)
-            ->get();
+        $this->newQuery()
+            ->join('invoice_user', 'invoices.id', '=', 'invoice_user.invoice_id')
+            ->where('invoice_user.user_id', '=', $user_id);
+
+        return $this->doQuery();
     }
+
+    public function whereHouse($house_id)
+    {
+        $this->newQuery()
+            ->where('house_id', '=', $house_id);
+
+        return $this->doQuery();
+    }
+
+    public function whereUser($user_id)
+    {
+        $this->newQuery()
+            ->where('user_id','=',$user_id);
+
+        return $this->doQuery();
+    }
+
 
 
 }

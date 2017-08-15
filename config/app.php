@@ -179,7 +179,6 @@ return [
         App\Applications\Api\Providers\ApiServiceProvider::class,
         App\Applications\Site\Providers\SiteServiceProvider::class,
 
-        Rinvex\Repository\Providers\RepositoryServiceProvider::class,
         //Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class
         \Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Spatie\Fractal\FractalServiceProvider::class,

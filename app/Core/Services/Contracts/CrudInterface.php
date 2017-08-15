@@ -1,7 +1,5 @@
 <?php
-namespace App\Core\Contracts;
-
-use phpDocumentor\Reflection\Types\Integer;
+namespace App\Core\Services\Contracts;
 
 interface CrudInterface {
 

@@ -10,6 +10,7 @@ namespace App\Applications\Api\Http\Controllers;
 
 
 use App\Applications\Api\Http\Requests\InvoiceRequest;
+use App\Domains\Invoices\Repositories\InvoiceRepository;
 use App\Domains\Invoices\Services\InvoiceService;
 use App\Domains\Invoices\Transformers\InvoiceItemTransformer;
 use App\Domains\Invoices\Transformers\InvoiceTransformer;
@@ -18,15 +19,17 @@ use JWTAuth;
 class InvoiceController extends BaseController
 {
     private $service;
+    private $repo;
 
-    public function __construct(InvoiceService $service)
+    public function __construct(InvoiceService $service, InvoiceRepository $repo)
     {
         $this->service = $service;
+        $this->repo = $repo;
     }
 
     public function index()
     {
-        $data = $this->service->findAll();
+        $data = $this->repo->getAll();
         if ($data->isEmpty()){
             return response()->json([
                 'message'   => 'Record not found',
@@ -38,7 +41,7 @@ class InvoiceController extends BaseController
 
     public function show($id)
     {
-        $data = $this->service->findBy('id',$id);
+        $data = $this->repo->findById($id);
         if ($data)
             return response()->json(compact('data'));
 
@@ -77,7 +80,7 @@ class InvoiceController extends BaseController
 
     public function showByHouse($house)
     {
-        $data = $this->service->findByHouse($house);
+        $data = $this->repo->whereHouse($house);
         $invoices = fractal()->collection($data)->transformWith(new InvoiceItemTransformer())->toArray();
         return response()->json($invoices);
     }
@@ -85,7 +88,7 @@ class InvoiceController extends BaseController
     public function myInvoices()
     {
         $user = JWTAuth::parseToken()->authenticate();
-        $data = $this->service->findByUser($user->id);
+        $data = $this->repo->whereUser($user->id);
         $invoices = fractal()->collection($data)->transformWith(new InvoiceItemTransformer())->toArray();
         return response()->json($invoices);
     }
@@ -93,7 +96,7 @@ class InvoiceController extends BaseController
     public function associate()
     {
         $user = JWTAuth::parseToken()->authenticate();
-        $data = $this->service->findByUserHasMember($user->id);
+        $data = $this->repo->whereUserHasInvoices($user->id);
         $invoices = fractal()->collection($data)->transformWith(new InvoiceItemTransformer())->toArray();
         return response()->json($invoices);
     }

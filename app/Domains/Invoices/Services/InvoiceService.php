@@ -79,18 +79,4 @@ class InvoiceService extends BaseService
         return $price/$countUsers;
     }
 
-    public function findByHouse($house)
-    {
-        return $this->repo->findWhere(['house_id','=',$house]);
-    }
-
-    public function findByUser($user)
-    {
-        return $this->repo->findWhere(['user_id','=',$user]);
-    }
-
-    public function findByUserHasMember($user)
-    {
-        return $this->repo->findWhereUser($user,['invoices.*']);
-    }
 }

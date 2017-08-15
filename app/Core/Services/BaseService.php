@@ -8,8 +8,8 @@
 
 namespace App\Core\Services;
 
-use App\Core\Contracts\CrudInterface;
-use Rinvex\Repository\Repositories\EloquentRepository;
+use App\Core\Services\Contracts\CrudInterface;
+use App\Core\Repositories\BaseRepository;
 
 abstract class BaseService implements CrudInterface
 {
@@ -18,7 +18,7 @@ abstract class BaseService implements CrudInterface
     /**
      * @param mixed $repo
      */
-    public function setRepo(EloquentRepository $repo)
+    public function setRepo(BaseRepository $repo)
     {
         $this->repo = $repo;
     }
@@ -104,26 +104,6 @@ abstract class BaseService implements CrudInterface
         if ($transaction)
             $this->repo->rollBack();
         throw new \Exception("error to delete model");
-    }
-
-    /**
-     * @param $attribute
-     * @param $value
-     * @param array $attributes
-     * @return \Illuminate\Database\Eloquent\Model
-     */
-    public function findBy($attribute, $value, $attributes = ['*'])
-    {
-        return $this->repo->findBy($attribute,$value,$attributes);
-    }
-
-    /**
-     * @param array $attributes
-     * @return \Illuminate\Database\Eloquent\Collection;
-     */
-    public function findAll($attributes = ['*'])
-    {
-        return $this->repo->findAll($attributes);
     }
 
 }

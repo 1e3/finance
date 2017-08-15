@@ -21,6 +21,6 @@ class UserController extends BaseController
 
     public function index()
     {
-        return $this->repo->findAll();
+        return $this->repo->getAll();
     }
 }

@@ -3,20 +3,22 @@ namespace App\Applications\Api\Http\Controllers;
 
 
 use App\Applications\Api\Http\Requests\PaymentRequest;
+use App\Domains\Payments\Repositories\PaymentRepository;
 use App\Domains\Payments\Services\PaymentService;
 
 class PaymentController extends BaseController
 {
     private $service;
-
-    public function __construct(PaymentService $service)
+    private $repo;
+    public function __construct(PaymentService $service, PaymentRepository $repo)
     {
         $this->service = $service;
+        $this->repo = $repo;
     }
 
     public function index()
     {
-        $data = $this->service->findAll();
+        $data = $this->repo->getAll();
         if ($data->isEmpty()){
             return response()->json([
                 'message'   => 'Record not found',
@@ -28,7 +30,7 @@ class PaymentController extends BaseController
 
     public function show($id)
     {
-        $data = $this->service->findBy('id',$id);
+        $data = $this->repo->findById($id);
         if ($data)
             return response()->json(compact('data'));
 

@@ -9,16 +9,13 @@
 namespace App\Domains\Houses\Repositories;
 
 
+use App\Core\Repositories\BaseRepository;
 use App\Domains\Houses\House;
-use Illuminate\Container\Container;
-use Rinvex\Repository\Repositories\EloquentRepository;
 
-class HouseRepository extends EloquentRepository
+class HouseRepository extends BaseRepository
 {
-    public function __construct(Container $container)
+    public function __construct()
     {
-        $this->setContainer($container)
-            ->setModel(House::class)
-            ->setRepositoryId('rinvex.repository.houses');
+        $this->model = House::class;
     }
 }

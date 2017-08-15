@@ -2,18 +2,15 @@
 namespace App\Domains\Models\Users\Repositories;
 
 
+use App\Core\Repositories\BaseRepository;
 use App\Domains\Users\User;
-use Rinvex\Repository\Repositories\EloquentRepository;
-use Illuminate\Contracts\Container\Container;
 
-class UserRepository extends EloquentRepository
+class UserRepository extends BaseRepository
 {
 
-    public function __construct(Container $container)
+    public function __construct()
     {
-        $this->setContainer($container)
-            ->setModel(User::class)
-            ->setRepositoryId('rinvex.repository.users');
+        $this->model = User::class;
     }
 
 }

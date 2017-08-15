@@ -10,20 +10,22 @@ namespace App\Applications\Api\Http\Controllers;
 
 
 use App\Applications\Api\Http\Requests\CategoryRequest;
+use App\Domains\Categories\Repositories\CategoryRepository;
 use App\Domains\Categories\Services\CategoryService;
 
 class CategoryController extends BaseController
 {
     private $service;
-
-    public function __construct(CategoryService $service)
+    private $repo;
+    public function __construct(CategoryService $service, CategoryRepository $repo)
     {
         $this->service = $service;
+        $this->repo = $repo;
     }
 
     public function index()
     {
-        $data = $this->service->findAll();
+        $data = $this->repo->getAll();
         if ($data->isEmpty()){
             return response()->json([
                 'message'   => 'Record not found',
@@ -35,7 +37,7 @@ class CategoryController extends BaseController
 
     public function show($id)
     {
-        $data = $this->service->findBy('id',$id);
+        $data = $this->repo->findById($id);
         if ($data)
             return response()->json(compact('data'));
 
