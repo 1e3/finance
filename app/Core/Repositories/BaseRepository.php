@@ -7,25 +7,25 @@ use Illuminate\Support\Facades\DB;
 abstract class BaseRepository implements BaseRepositoryInterface {
 
     protected $model;
-    protected $builder;
+    protected $query;
 
     public function newQuery()
     {
-        return $this->builder = app($this->model)->newQuery();
+        return $this->query = app($this->model)->make();
     }
 
     public function doQuery()
     {
-        if (!$this->builder)
+        if (!$this->query)
             $this->newQuery();
-        return $this->builder->get();
+        return $this->query->get();
     }
 
     public function findById($id)
     {
-        if (!$this->builder)
+        if (!$this->query)
             $this->newQuery();
-        return $this->builder->find($id);
+        return $this->query->find($id);
     }
 
     public function beginTransaction()
@@ -45,7 +45,7 @@ abstract class BaseRepository implements BaseRepositoryInterface {
 
     public function create($attributes)
     {
-        $model = $this->newQuery()->getModel()->newInstance();
+        $model = $this->newQuery();
         $model->fill($attributes);
         $created = $model->save();
         return ($created) ? $model : $created ;

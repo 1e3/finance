@@ -80,7 +80,7 @@ class InvoiceController extends BaseController
 
     public function showByHouse($house)
     {
-        $data = $this->repo->whereHouse($house);
+        $data = $this->repo->whereHouse($house)->doQuery();
         $invoices = fractal()->collection($data)->transformWith(new InvoiceItemTransformer())->toArray();
         return response()->json($invoices);
     }
@@ -88,7 +88,7 @@ class InvoiceController extends BaseController
     public function myInvoices()
     {
         $user = JWTAuth::parseToken()->authenticate();
-        $data = $this->repo->whereUser($user->id);
+        $data = $this->repo->whereUser($user->id)->doQuery();
         $invoices = fractal()->collection($data)->transformWith(new InvoiceItemTransformer())->toArray();
         return response()->json($invoices);
     }
@@ -96,7 +96,7 @@ class InvoiceController extends BaseController
     public function associate()
     {
         $user = JWTAuth::parseToken()->authenticate();
-        $data = $this->repo->whereUserHasInvoices($user->id);
+        $data = $this->repo->whereUserHasInvoices($user->id)->doQuery();
         $invoices = fractal()->collection($data)->transformWith(new InvoiceItemTransformer())->toArray();
         return response()->json($invoices);
     }

@@ -21,10 +21,10 @@ class InvoiceRepository extends BaseRepository
     public function whereUserHasInvoices($user_id)
     {
         $this->newQuery()
-            ->join('invoice_user', 'invoices.id', '=', 'invoice_user.invoice_id')
+            ->users()
             ->where('invoice_user.user_id', '=', $user_id);
 
-        return $this->doQuery();
+        return $this;
     }
 
     public function whereHouse($house_id)
@@ -32,7 +32,7 @@ class InvoiceRepository extends BaseRepository
         $this->newQuery()
             ->where('house_id', '=', $house_id);
 
-        return $this->doQuery();
+        return $this;
     }
 
     public function whereUser($user_id)
@@ -40,7 +40,7 @@ class InvoiceRepository extends BaseRepository
         $this->newQuery()
             ->where('user_id','=',$user_id);
 
-        return $this->doQuery();
+        return $this;
     }
 
 
