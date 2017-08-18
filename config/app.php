@@ -182,6 +182,7 @@ return [
         //Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class
         \Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Spatie\Fractal\FractalServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
 
     ],
 
