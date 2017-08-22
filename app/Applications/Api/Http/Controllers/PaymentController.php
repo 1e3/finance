@@ -55,7 +55,7 @@ class PaymentController extends BaseController
     {
         $this->service->delete($id);
         return response()->json([
-            'message' => 'Successfull'
+            'message' => 'Successful'
         ],200);
     }
 

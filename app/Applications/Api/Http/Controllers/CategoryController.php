@@ -61,7 +61,7 @@ class CategoryController extends BaseController
     public function destroy(CategoryRequest $request,$id)
     {
         $this->service->delete($id);
-        return response()->json(['message'=>'Successfull'],200);
+        return response()->json(['message'=>'Successful'],200);
     }
 
 

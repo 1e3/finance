@@ -81,7 +81,7 @@ class HouseTest extends TestCase
         $headers['Authorization'] = 'Bearer '. $this->token;
         $this->json('DELETE','api/houses/1',[],$headers)
             ->assertStatus(200)
-            ->assertJson(['message'=>'Successfull']);
+            ->assertJson(['message'=>'Successful']);
     }
 
     public function testUpdate()

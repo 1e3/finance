@@ -66,6 +66,8 @@ class Handler extends ExceptionHandler
             $status = 400;
             if ($e instanceof ValidationException)
                 return $this->convertValidationExceptionToResponse($e, $request);
+            elseif ($e instanceof ModelNotFoundException)
+                return $this->convertValidationExceptionToResponse($e, $request);
 
             $status = ($this->isHttpException($e)) ? $e->getCode() : $status;
 

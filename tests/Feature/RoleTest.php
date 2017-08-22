@@ -91,7 +91,7 @@ class RoleTest extends TestCase
         $headers['Authorization'] = 'Bearer '. $this->token;
         $this->json('DELETE','api/roles/1',[],$headers)
             ->assertStatus(200)
-            ->assertJson(['message'=>'Successfull']);
+            ->assertJson(['message'=>'Successful']);
     }
 
     public function testDeleteFailed()

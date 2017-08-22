@@ -62,7 +62,7 @@ class RoleController extends BaseController
     {
         $this->service->delete($id);
         return response()->json([
-            'message' => 'Successfull'
+            'message' => 'Successful'
         ],200);
     }
 
@@ -70,7 +70,7 @@ class RoleController extends BaseController
     {
         $this->service->attachPerms($role, $request->get('perms'));
         return response()->json([
-            'message' => 'Successfull'
+            'message' => 'Successful'
         ],200);
     }
 
