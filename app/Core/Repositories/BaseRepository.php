@@ -11,7 +11,9 @@ abstract class BaseRepository implements BaseRepositoryInterface {
 
     public function newQuery()
     {
-        return $this->query = app($this->model)->make();
+        if (!$this->query)
+            return $this->query = app($this->model)->make();
+        return $this->query;
     }
 
     public function doQuery()

@@ -183,6 +183,8 @@ return [
         \Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         Spatie\Fractal\FractalServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
+        Zizaco\Entrust\EntrustServiceProvider::class,
+
 
     ],
 
@@ -235,6 +237,7 @@ return [
         'JWTAuth'   => \Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => \Tymon\JWTAuth\Facades\JWTFactory::class,
         'Fractal' => Spatie\Fractal\FractalFacade::class,
+        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
 
     ],
 

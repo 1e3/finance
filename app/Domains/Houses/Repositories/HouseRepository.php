@@ -18,4 +18,14 @@ class HouseRepository extends BaseRepository
     {
         $this->model = House::class;
     }
+
+    public function whereHasUser($house, $user_id)
+    {
+        $this->newQuery()
+            ->residents()
+            ->where('user_house.user_id', '=', $user_id);
+        //->where('user_house.house_id', '=', $house);
+
+        return $this;
+    }
 }

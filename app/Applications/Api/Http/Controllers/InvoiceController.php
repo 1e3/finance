@@ -10,6 +10,7 @@ namespace App\Applications\Api\Http\Controllers;
 
 
 use App\Applications\Api\Http\Requests\InvoiceRequest;
+use App\Domains\Houses\Repositories\HouseRepository;
 use App\Domains\Invoices\Repositories\InvoiceRepository;
 use App\Domains\Invoices\Services\InvoiceService;
 use App\Domains\Invoices\Transformers\InvoiceItemTransformer;
@@ -20,11 +21,13 @@ class InvoiceController extends BaseController
 {
     private $service;
     private $repo;
+    private $repoHouse;
 
-    public function __construct(InvoiceService $service, InvoiceRepository $repo)
+    public function __construct(InvoiceService $service, InvoiceRepository $repo, HouseRepository $repoHouse)
     {
         $this->service = $service;
         $this->repo = $repo;
+        $this->repoHouse = $repoHouse;
     }
 
     public function index()

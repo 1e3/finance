@@ -18,6 +18,7 @@ Route::group(['prefix'=>'auth','as'=>'auth.'], function (){
 Route::group(['middleware'=>'jwt.auth'],function (){
     Route::resource('categories','CategoryController');
     Route::resource('houses','HouseController');
+    Route::resource('roles','RoleController');
 
     Route::get('invoices/{id}/resume',['as'=>'invoices.resume','uses'=>'InvoiceController@resume']);
     Route::get('invoices/house/{house}',['as'=>'invoices.house','uses'=>'InvoiceController@showByHouse']);

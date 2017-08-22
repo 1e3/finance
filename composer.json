@@ -11,7 +11,8 @@
         "laravel/tinker": "~1.0",
         "league/fractal": "^0.16.0",
         "spatie/laravel-fractal": "^4.3",
-        "tymon/jwt-auth": "dev-develop"
+        "tymon/jwt-auth": "dev-develop",
+        "zizaco/entrust": "5.2.x-dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
