@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Domains\Permissions\Permission;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -17,6 +18,12 @@ class RoleTest extends TestCase
         //$this->signIn();
         $this->assertObjectHasAttribute('access_token', $content);
         $this->token = $content->access_token;
+    }
+
+
+    public function createPerms($data = ['name'=>'create_user','display_name'=>'Create User','description'=>'Create user'])
+    {
+        Permission::create($data);
     }
 
     public function testCreate()
@@ -128,4 +135,62 @@ class RoleTest extends TestCase
             ->assertSee('The description must be at least 3');
 
     }
+
+    public function testAttachPerm()
+    {
+        $this->testCreate();
+        $this->createPerms();
+        $headers['Authorization'] = 'Bearer '. $this->token;
+        $response = $this->json('POST',route('roles.attach.perms',1),[
+            'perms'     => 1
+        ],$headers);
+        $response->assertStatus(200);
+    }
+
+    public function testAttachPerms()
+    {
+        $this->testCreate();
+        $this->createPerms();
+        $this->createPerms([
+            'name'=>'edit_user',
+            'display_name'=>'Edit User',
+            'description'=>'Edit user'
+        ]);
+        $headers['Authorization'] = 'Bearer '. $this->token;
+        $response = $this->json('POST',route('roles.attach.perms',1),[
+            'perms'     => [1,2]
+        ],$headers);
+        $response->assertStatus(200);
+    }
+
+
+    public function testDetachPerm()
+    {
+        $this->testAttachPerms();
+        $headers['Authorization'] = 'Bearer '. $this->token;
+        $response = $this->json('POST',route('roles.detach.perms',1),[
+            'perms'     => 1
+        ],$headers);
+        $response->assertStatus(200);
+    }
+
+
+    public function testDetachPerms()
+    {
+        $this->testAttachPerms();
+        $headers['Authorization'] = 'Bearer '. $this->token;
+        $response = $this->json('POST',route('roles.detach.perms',1),[
+            'perms'     => [1,2]
+        ],$headers);
+        $response->assertStatus(200);
+    }
+
+    public function testDeleteFailedHasPermissions()
+    {
+        $headers['Authorization'] = 'Bearer '. $this->token;
+        $this->json('DELETE','api/roles/1',[],$headers)
+            ->assertStatus(400)
+            ->assertSee('error to delete model');
+    }
+
 }

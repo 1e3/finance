@@ -8,7 +8,7 @@
 
 namespace App\Applications\Api\Http\Controllers;
 
-
+use App\Applications\Api\Http\Requests\RolePermsRequest;
 use App\Applications\Api\Http\Requests\RoleRequest;
 use App\Domains\Roles\Repositories\RoleRepository;
 use App\Domains\Roles\Services\RoleService;
@@ -66,7 +66,22 @@ class RoleController extends BaseController
         ],200);
     }
 
+    public function attach(RolePermsRequest $request, $role)
+    {
+        $this->service->attachPerms($role, $request->get('perms'));
+        return response()->json([
+            'message' => 'Successfull'
+        ],200);
+    }
 
+    public function detach(RolePermsRequest $request, $role)
+    {
+        $this->service->detachPerms($role, $request->get('perms'));
+        return response()->json([
+            'message'   =>  'Successful'
+        ],200);
+
+    }
 
 
 }
