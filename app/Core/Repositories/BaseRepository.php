@@ -12,7 +12,7 @@ abstract class BaseRepository implements BaseRepositoryInterface {
     public function newQuery()
     {
         if (!$this->query)
-            return $this->query = app($this->model)->make();
+            return $this->query = app($this->model)->newQuery();
         return $this->query;
     }
 
@@ -47,7 +47,7 @@ abstract class BaseRepository implements BaseRepositoryInterface {
 
     public function create($attributes)
     {
-        $model = $this->newQuery();
+        $model = $this->newQuery()->getModel()->newInstance();
         $model->fill($attributes);
         $created = $model->save();
         return ($created) ? $model : $created ;
@@ -77,6 +77,11 @@ abstract class BaseRepository implements BaseRepositoryInterface {
     public function getAll()
     {
         return $this->doQuery();
+    }
+
+    public function getModel()
+    {
+        return $this->model;
     }
 }
 
