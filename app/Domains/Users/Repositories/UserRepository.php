@@ -13,4 +13,10 @@ class UserRepository extends BaseRepository
         $this->model = User::class;
     }
 
+    public function whereInIds($ids)
+    {
+        $this->newQuery()
+            ->whereIn('id',$ids);
+        return $this;
+    }
 }

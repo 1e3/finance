@@ -10,8 +10,10 @@ namespace App\Applications\Api\Http\Controllers;
 
 use App\Applications\Api\Http\Requests\RolePermsRequest;
 use App\Applications\Api\Http\Requests\RoleRequest;
+use App\Applications\Api\Http\Requests\RoleUserRequest;
 use App\Domains\Roles\Repositories\RoleRepository;
 use App\Domains\Roles\Services\RoleService;
+use Illuminate\Http\Request;
 
 class RoleController extends BaseController
 {
@@ -83,5 +85,20 @@ class RoleController extends BaseController
 
     }
 
+    public function addUsers(RoleUserRequest $request, $role)
+    {
+        $this->service->attachUsers($role, $request->get('users'));
+        return response()->json([
+            'message'   =>  'Successful'
+        ],200);
+    }
+
+    public function removeUsers(RoleUserRequest $request, $role)
+    {
+        $this->service->detachUsers($role, $request->get('users'));
+        return response()->json([
+            'message'   =>  'Successful'
+        ],200);
+    }
 
 }

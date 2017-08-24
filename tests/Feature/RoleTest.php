@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Domains\Permissions\Permission;
+use App\Domains\Users\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -21,9 +22,14 @@ class RoleTest extends TestCase
     }
 
 
-    public function createPerms($data = ['name'=>'create_user','display_name'=>'Create User','description'=>'Create user'])
+    public function createPerm($data = ['name'=>'create_user','display_name'=>'Create User','description'=>'Create user'])
     {
         Permission::create($data);
+    }
+
+    public function createUser($data = ['name'=>'Andre','email'=>'andre@galdino.com','password'=>'test123'])
+    {
+        User::create($data);
     }
 
     public function testCreate()
@@ -139,7 +145,7 @@ class RoleTest extends TestCase
     public function testAttachPerm()
     {
         $this->testCreate();
-        $this->createPerms();
+        $this->createPerm();
         $headers['Authorization'] = 'Bearer '. $this->token;
         $response = $this->json('POST',route('roles.attach.perms',1),[
             'perms'     => 1
@@ -150,8 +156,8 @@ class RoleTest extends TestCase
     public function testAttachPerms()
     {
         $this->testCreate();
-        $this->createPerms();
-        $this->createPerms([
+        $this->createPerm();
+        $this->createPerm([
             'name'=>'edit_user',
             'display_name'=>'Edit User',
             'description'=>'Edit user'
@@ -191,6 +197,60 @@ class RoleTest extends TestCase
         $this->json('DELETE','api/roles/1',[],$headers)
             ->assertStatus(400)
             ->assertSee('error to delete model');
+    }
+
+    public function testAttachUser()
+    {
+        $this->testCreate();
+        $this->createUser();
+        $headers['Authorization'] = 'Bearer '. $this->token;
+        $response = $this->json('POST',route('roles.attach.users',1),[
+            'users'     => 1
+        ],$headers);
+        $response->assertStatus(200);
+    }
+
+    public function testAttachUsers()
+    {
+        $this->testCreate();
+        $this->createUser();
+        $headers['Authorization'] = 'Bearer '. $this->token;
+        $response = $this->json('POST',route('roles.attach.users',1),[
+            'users'     => [1,2]
+        ],$headers);
+        $response->assertStatus(200);
+    }
+
+    public function testAttachUserNotFound()
+    {
+        $this->testCreate();
+        $this->createUser();
+        $headers['Authorization'] = 'Bearer '. $this->token;
+        $response = $this->json('POST',route('roles.attach.users',1),[
+            'users'     => 100
+        ],$headers);
+        $response->assertStatus(400);
+        $response->assertSee('Users not found');
+    }
+
+    public function testDetachUser()
+    {
+        $this->testAttachUsers();
+        $headers['Authorization'] = 'Bearer '. $this->token;
+        $response = $this->json('POST',route('roles.detach.users',1),[
+            'users'     => 1
+        ],$headers);
+        $response->assertStatus(200);
+    }
+
+    public function testDetachUsers()
+    {
+        $this->testAttachUsers();
+        $headers['Authorization'] = 'Bearer '. $this->token;
+        $response = $this->json('POST',route('roles.detach.users',1),[
+            'users'     => [1,2]
+        ],$headers);
+        $response->assertStatus(200);
     }
 
 }
